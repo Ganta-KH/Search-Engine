@@ -89,7 +89,7 @@ def Freeman(image): # Freeman chains code 8-connex
 
     bitmap = np.zeros(img.shape)
     chains_code = []
-    for i in range(len(Xs)): # shearch for all tha chain that exit in the image
+    for i in range(len(Xs)): # search for all tha chain that exit in the image
         startX, startY = Xs[i], Ys[i] # get the starting point
         if bitmap[startX, startY] != 255.: 
             chain_code = ''
@@ -100,7 +100,6 @@ def Freeman(image): # Freeman chains code 8-connex
     lengths = np.array(list(map(lambda i: len(i), chains_code)))
     mx = np.argmax(lengths)
     hist = np.array([chains_code[mx].count(c) for c in '01234567'])
-
 
     #Image.fromarray(bitmap.astype('uint8')).show()
     return hist # chain code historgam

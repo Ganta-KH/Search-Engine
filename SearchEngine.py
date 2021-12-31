@@ -85,8 +85,8 @@ def imageSearch(searchFolder, downloadFolder, DBpath, dct, chain):
     DB, cursor = connectDB(DBpath)
     deleteImagesFromBD(cursor)
 
-    dct_threshold = 700
-    freeman_threshold = 600
+    dct_threshold = 600
+    freeman_threshold = 200
     if dct is not None:
         dY, dCb, dCr = dct
         for filename in os.listdir(searchFolder):
@@ -110,7 +110,7 @@ def imageSearch(searchFolder, downloadFolder, DBpath, dct, chain):
 
             chain2 = Freeman(np.array(Image.open(file_path).convert('RGB')))
             dist = sqrt(np.sum((chain - chain2) ** 2))
-
+            
             if dist <= freeman_threshold:
 
                 name = file_path.split('\\')[-1]
@@ -118,6 +118,7 @@ def imageSearch(searchFolder, downloadFolder, DBpath, dct, chain):
                 with open(file_path, 'rb') as f:
                     ImgB = f.read()
                     InsertImage(name.split('.')[0], ImgB, cursor, DB)
+                    print('dist:', dist)
                     print('Download: %s' % name)
 
                 #with open(file_path, 'rb') as f:
