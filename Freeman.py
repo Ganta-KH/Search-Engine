@@ -103,5 +103,5 @@ def Freeman(image): # Freeman chains code 8-connex
 
 
     #Image.fromarray(bitmap.astype('uint8')).show()
-    return hist #chains_code
+    return hist # chain code historgam
 
