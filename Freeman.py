@@ -13,7 +13,7 @@ def Naif_Detector(image):
 
 
 def ChainCode(img, x, y, chain_code, bitmap):
-    #try:
+    try:
         # right
         if (img[x, y+1] == 255.) and (bitmap[x, y+1] == 0.): 
             chain_code += '0'
@@ -76,7 +76,7 @@ def ChainCode(img, x, y, chain_code, bitmap):
             return ChainCode(img, x, y, chain_code, bitmap)
 
         else: return chain_code
-    #except: pass
+    except: pass
 
 
 def Freeman(image): # Freeman chains code 8-connex

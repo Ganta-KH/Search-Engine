@@ -17,15 +17,15 @@ class widget(QMainWindow):
         self.imgUpload.clicked.connect(self.deleteFiles)
         self.imgUpload.clicked.connect(self.UploadImage)
 
-        self.path = os.getcwd()+'\\Download' #"C:/Users/lenovo/Documents/Python Scripts/Search Engine/Download"
-        self.searchPath = os.getcwd()+'\\Images' #"C:/Users/lenovo/Documents/Python Scripts/Search Engine/Images"
-        self.DBPath = os.getcwd()+'\\assets\\SearchEngine.db' #"C:/Users/lenovo/Documents/Python Scripts/Search Engine/assets/SearchEngine.db"
+        self.path = os.getcwd()+'\\Download' 
+        self.searchPath = os.getcwd()+'\\Images' 
+        self.DBPath = os.getcwd()+'\\assets\\SearchEngine.db' 
         self.pixel = None
         self.DCT = None
         self.Chains = None
 
     def UploadImage(self):
-        #try:
+        try:
             imageFile = QFileDialog.getOpenFileName(None, "Open image", self.searchPath, "Image Files (*.png *.jpg *.bmp *.jpeg *.png *.jfif)")
             self.imagename = str(imageFile[0])
             self.pixel = np.array(Image.open(self.imagename).convert('RGB'))
@@ -42,7 +42,7 @@ class widget(QMainWindow):
             self.DCT = None
             self.Chains = None
 
-        #except: pass
+        except: pass
     
     def showImage(self):
         os.chdir(self.path)

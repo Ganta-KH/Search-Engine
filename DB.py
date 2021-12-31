@@ -1,9 +1,8 @@
-import sqlite3, io
-from PIL import Image
+import sqlite3
 
 
 def connectDB(DB_path):
-    DB = sqlite3.connect(DB_path) # 'assets/tutorial.db'
+    DB = sqlite3.connect(DB_path)
     cursor = DB.cursor()
     cursor.execute("CREATE TABLE IF NOT EXISTS Images ( id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, Photo longblob NOT NULL)")
     return DB, cursor
