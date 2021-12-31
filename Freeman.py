@@ -17,7 +17,6 @@ def ChainCode(img, x, y, chain_code, bitmap):
         # right
         if (img[x, y+1] == 255.) and (bitmap[x, y+1] == 0.): 
             chain_code += '0'
-            bitmap[x-1, y] == 0.
             bitmap.itemset((x, y+1), 255.)
             y += 1
             return ChainCode(img, x, y, chain_code, bitmap)
