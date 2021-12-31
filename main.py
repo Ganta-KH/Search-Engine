@@ -17,9 +17,9 @@ class widget(QMainWindow):
         self.imgUpload.clicked.connect(self.deleteFiles)
         self.imgUpload.clicked.connect(self.UploadImage)
 
-        self.path = "C:/Users/lenovo/Documents/Python Scripts/Search-Engine/Download"
-        self.searchPath = "C:/Users/lenovo/Documents/Python Scripts/Search-Engine/Images"
-        self.DBPath = "C:/Users/lenovo/Documents/Python Scripts/Search-Engine/assets/SearchEngine.db"
+        self.path = os.getcwd()+'\\Download' #"C:/Users/lenovo/Documents/Python Scripts/Search Engine/Download"
+        self.searchPath = os.getcwd()+'\\Images' #"C:/Users/lenovo/Documents/Python Scripts/Search Engine/Images"
+        self.DBPath = os.getcwd()+'\\assets\\SearchEngine.db' #"C:/Users/lenovo/Documents/Python Scripts/Search Engine/assets/SearchEngine.db"
         self.pixel = None
         self.DCT = None
         self.Chains = None
