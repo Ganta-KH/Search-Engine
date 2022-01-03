@@ -1,7 +1,7 @@
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QFileDialog
 from PyQt5.uic import loadUi
-from SearchEngine import *
+from SearchEngine import textSearch, imageSearch, Freeman, DCT, os, Image, np
 import glob, shutil
 
 from tools import is_grayScale

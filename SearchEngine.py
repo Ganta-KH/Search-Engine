@@ -8,20 +8,6 @@ from PIL import Image
 from math import sqrt
 from DB import *
 
-"""
-            elif not download:
-                images = []
-                for paragraph in paragraphs:
-                    if all([ re.search(word.lower(), paragraph.text.lower()) for word in search]):
-                        match = re.search(paragraph.text, r.text)
-                        if match: 
-                            para_Pos = match.span()
-                            txt = soup.text[para_Pos[0] - 10000 : (para_Pos[1] + 10000) % html_lenght ]
-                            sp = BS(txt, "html.parser")
-                            images.append( sp.select('img') )
-                            print(images)
-"""
-
 def textSearch(downloadFolder, DBpath, search):
     if search != '':
         DB, cursor = connectDB(DBpath)
@@ -48,12 +34,25 @@ def textSearch(downloadFolder, DBpath, search):
             soup = BS(r.text, 'html.parser')
             html_lenght = len(soup.text)
             download = False
+            titleSearch = False
             title = soup.title.text.lower() # get hte page title
             paragraphs = soup.select('p') # the paragraphs in the page
             images = soup.select('img') # all image in the page
-            if all([ word.lower() in title for word in search]): download = True # search in page title
-            elif any([ all([ re.search(word.lower(), paragraph.text.lower()) for word in search]) for paragraph in paragraphs]): download = True # search in paragraphs
+            if all([ word.lower() in title for word in search]): download = True; titleSearch = True # search in page title
+            #elif any([ all([ re.search(word.lower(), paragraph.text.lower()) for word in search]) for paragraph in paragraphs]): download = True # search in paragraphs
             
+            elif not titleSearch:
+                image = []
+                for paragraph in paragraphs:
+                    if all([ re.search(word.lower(), paragraph.text.lower()) for word in search]):
+                        match = re.search(paragraph.text, r.text)
+                        if match: download = True;                                                                                                                                                                                                                                                                                              break
+                        if match: 
+                            para_Pos = match.span()
+                            txt = soup.text[para_Pos[0] - 1000 : (para_Pos[1] + 1000) % html_lenght ]
+                            sp = BS(txt, "html.parser")
+                            image.append( sp.select('img') )
+
             else: # search in image title
                 for image in images:
                     imageTitle = image.attrs.get('alt', '')
@@ -80,6 +79,9 @@ def textSearch(downloadFolder, DBpath, search):
         closeDB(DB, cursor)
 
 
+#############################################################################
+
+
 def imageSearch(searchFolder, downloadFolder, DBpath, dct, chain):
 
     DB, cursor = connectDB(DBpath)
@@ -102,7 +104,6 @@ def imageSearch(searchFolder, downloadFolder, DBpath, dct, chain):
                     ImgB = f.read()
                     InsertImage(name.split('.')[0], ImgB, cursor, DB)
                     print('Download: %s' % name)
-                #shutil.copyfile(file_path, downloadFolder+'\\'+name)
 
     elif chain is not None:
         for filename in os.listdir(searchFolder):
@@ -118,14 +119,7 @@ def imageSearch(searchFolder, downloadFolder, DBpath, dct, chain):
                 with open(file_path, 'rb') as f:
                     ImgB = f.read()
                     InsertImage(name.split('.')[0], ImgB, cursor, DB)
-                    print('dist:', dist)
                     print('Download: %s' % name)
-
-                #with open(file_path, 'rb') as f:
-                #    ImgB = f.read()
-                #    InsertImage(name.split('.')[0], ImgB, cursor, DB)
-                #print('Download: %s' % file_path.split('\\')[-1])
-                #shutil.copyfile(file_path, downloadFolder+'\\'+file_path.split('\\')[-1])
     
     getImage(cursor, downloadFolder)
     closeDB(DB, cursor)
